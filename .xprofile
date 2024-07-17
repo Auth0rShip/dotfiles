@@ -1,0 +1,8 @@
+xset r rate 250 50
+
+xset dpms 1200 1200 1200
+xset -dpms
+xset s off
+
+#keybind
+xmodmap ~/.xmodmap
