@@ -1,0 +1,23 @@
+[[plugins]]
+repo = "preservim/nerdtree"
+
+[[plugins]]
+repo = "Shougo/neocomplete"
+
+[[plugins]]
+repo = "Shougo/unite.vim"
+
+[[plugins]]
+repo = "tpope/vim-fugitive"
+
+[[plugins]]
+repo = 'lervag/vimtex'
+on_ft=['tex']
+hook_source='''
+  let g:vimtex_view_general_viewer = 'displayline'
+  let g:vimtex_view_general_options = '-r @line @pdf @tex'
+'''    
+
+
+[[plugins]]
+repo = "jiangmiao/auto-pairs"
