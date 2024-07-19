@@ -5,4 +5,4 @@ xset -dpms
 xset s off
 
 #keybind
-xmodmap ~/.xmodmap
+#xmodmap ~/.xmodmap
