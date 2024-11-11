@@ -1,8 +1,11 @@
-xset r rate 250 50
+xset r rate 200 50
 
 xset dpms 1200 1200 1200
 xset -dpms
 xset s off
 
 #keybind
-#xmodmap ~/.xmodmap
+xmodmap ~/.xmodmap
+
+#locker
+light-locker --lock-on-suspend &

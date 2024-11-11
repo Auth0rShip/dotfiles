@@ -34,4 +34,3 @@ else
     [ -x /usr/bin/xterm ] && xterm -geometry 80x50-50+150 &
     [ -x /usr/bin/twm ] && /usr/bin/twm
 fi
-
