@@ -57,6 +57,7 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+Shift+q kill
 
 bindsym $mod+Shift+x exec --no-startup-id light-locker-command -l
+#bindsym $mod+Shift+x exec dm-tool lock
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id "rofi -show combi"
@@ -134,16 +135,16 @@ set $ws10 "10"
 
 
 # apply workspace to monitor
-workspace $ws1 output HDMI-1
-workspace $ws2 output HDMI-0
-workspace $ws3 output HDMI-1
-workspace $ws4 output HDMI-0
-workspace $ws5 output HDMI-1
-workspace $ws6 output HDMI-0
-workspace $ws7 output HDMI-1
-workspace $ws8 output HDMI-0
-workspace $ws9 output HDMI-1
-workspace $ws10 output HDMI-0
+workspace $ws1 output DP-2
+workspace $ws2 output DP-0
+workspace $ws3 output DP-2
+workspace $ws4 output DP-0
+workspace $ws5 output DP-2
+workspace $ws6 output DP-0
+workspace $ws7 output DP-2
+workspace $ws8 output DP-0
+workspace $ws9 output DP-2
+workspace $ws10 output DP-0
 
 
 # switch to workspace
