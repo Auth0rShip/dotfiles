@@ -32,8 +32,7 @@ bindkey '^[[F' end-of-line                        # end
 bindkey '^[[Z' undo                               # shift + tab undo last action
 
 # enable completion features
-autoload -Uz compinit
-compinit -d ~/.cache/zcompdump
+#compinit -d ~/.cache/zcompdump
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete
@@ -47,6 +46,9 @@ zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p
 zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+autoload -Uz compinit
+compinit
+zstyle ':completion:*' list-suffixes
 
 # History configurations
 HISTFILE=~/.zsh_history
@@ -265,3 +267,7 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
 export PATH="$PATH:$HOME/mylibs/libs_ctf/bin"
 alias gdb="gdb -q"
+
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+

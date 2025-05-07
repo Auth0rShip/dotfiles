@@ -2,10 +2,14 @@ xset r rate 200 50
 
 xset s on
 xset s 3600 3600
-xset dpms 3600 3600 3600
+xset dpms 3600 5400 7200
+
+
+setxkbmap us
 
 #keybind
 xmodmap $HOME/.xmodmap
 
 #locker
-light-locker --lock-on-suspend &
+#light-locker --lock-on-suspend &
+
