@@ -24,10 +24,10 @@ syntax enable
 
 
 " Tab系
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set smarttab
-
+nnoremap :s2t :retab!
 
 " 検索系
 set ignorecase
