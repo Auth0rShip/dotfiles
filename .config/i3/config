@@ -27,6 +27,7 @@ exec --no-startup-id fcitx5
 exec_always --no-startup-id picom -b
 exec_always --no-startup-id dunst -config ~/.config/dunst/dunstrc
 
+exec --no-startup-id ~/.screenlayout/main.sh
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
@@ -138,16 +139,16 @@ set $ws10 "10"
 
 
 # apply workspace to monitor
-workspace $ws1 output DP-2
-workspace $ws2 output DP-0
-workspace $ws3 output DP-2
-workspace $ws4 output DP-0
-workspace $ws5 output DP-2
-workspace $ws6 output DP-0
-workspace $ws7 output DP-2
-workspace $ws8 output DP-0
-workspace $ws9 output DP-2
-workspace $ws10 output DP-0
+workspace $ws1 output DP-0
+workspace $ws2 output DP-2
+workspace $ws3 output DP-0
+workspace $ws4 output DP-2
+workspace $ws5 output DP-0
+workspace $ws6 output DP-2
+workspace $ws7 output DP-0
+workspace $ws8 output DP-2
+workspace $ws9 output DP-0
+workspace $ws10 output DP-2
 
 
 # switch to workspace
@@ -178,7 +179,7 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 
 
 # assign app
-assign [class="discord"] workspace 10
+assign [class="discord"] workspace $ws10
 
 
 # reload the configuration file
