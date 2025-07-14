@@ -11,7 +11,6 @@ set autoindent
 " 見た目系
 set number
 set virtualedit=onemore
-set smartindent
 set visualbell
 set showmatch
 set laststatus=2
@@ -27,7 +26,8 @@ syntax enable
 set tabstop=4
 set shiftwidth=4
 set smarttab
-nnoremap :s2t :retab!
+set softtabstop=4
+set expandtab
 
 " 検索系
 set ignorecase
