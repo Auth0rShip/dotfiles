@@ -7,8 +7,7 @@ set hidden
 set showcmd
 set autoindent
 
-
-" 見た目系
+"見た目系
 set number
 set virtualedit=onemore
 set visualbell
