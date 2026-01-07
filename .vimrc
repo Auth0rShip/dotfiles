@@ -36,7 +36,16 @@ set wrapscan
 set hlsearch
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
-"set clipboard+=unnamedplus
+"set clipboard=unnamedplus
+
+if has('mac')
+    augroup YankToClipboard
+        autocmd!
+        autocmd TextYankPost * if v:event.operator ==# 'y' |
+          \ call system('pbcopy', getreg('"')) |
+          \ endif
+    augroup END'"'))
+endif
 
 "--------- dein setting ----------
 " vimrc に以下のように追記
