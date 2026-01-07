@@ -3,7 +3,7 @@ clear control
 clear mod1
 
 keycode 66 = Escape
-keycode 132 = backslash
+    keycode 132 = backslash bar
 
 add control = Control_L Control_R
 add mod1 = Alt_L Alt_R
