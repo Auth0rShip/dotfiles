@@ -37,7 +37,6 @@ set hlsearch
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
 "set clipboard+=unnamedplus
-set clipboard=unnamedplus
 
 "--------- dein setting ----------
 " vimrc に以下のように追記
