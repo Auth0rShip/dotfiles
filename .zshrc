@@ -247,8 +247,7 @@ fi
 # some more ls aliases
 alias ll='ls -l'
 alias la='ls -A'
-alias l='ls -CF'
-alias ls='ls -GF'
+alias ls='ls --color=auto -F'
 
 
 # enable auto-suggestions based on the history
