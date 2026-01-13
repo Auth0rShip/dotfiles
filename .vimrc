@@ -36,7 +36,7 @@ set wrapscan
 set hlsearch
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
-"set clipboard=unnamedplus
+set clipboard=unnamedplus
 
 if has('mac')
     augroup YankToClipboard
