@@ -92,4 +92,3 @@ endif
 
 " plugin command 
 
-nnoremap :tree :NERDTree

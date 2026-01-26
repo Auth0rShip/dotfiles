@@ -1,0 +1,12 @@
+[begin] (Fluxbox)
+      [exec] (Alacritty) {alacritty}
+      [exec] (Firefox) {firefox}
+      [exec] (Discord) {discord}
+      [separator]
+      [submenu] (Settings)
+            [config] (Fluxbox Settings)
+            [reconfig] (Reload Config)
+            [restart] (Restart Fluxbox)
+            [exit] (Exit)
+      [end]
+[end]

@@ -1,7 +1,4 @@
 [[plugins]]
-repo = "preservim/nerdtree"
-
-[[plugins]]
 repo = "Shougo/neocomplete"
 
 [[plugins]]
@@ -21,3 +18,7 @@ hook_source='''
 
 [[plugins]]
 repo = "jiangmiao/auto-pairs"
+
+
+[[plugins]]
+repo = "lambdalisue/vim-fern"

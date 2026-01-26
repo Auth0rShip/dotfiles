@@ -1,0 +1,9 @@
+[startup]  (Term){alacritty}
+[startup]  (Web){firefox}
+[startup]  (Chat){discord}
+[app] (name=fbrun)
+  [Position]	(CENTER)	{0 0}
+  [Layer]	{2}
+[end]
+[app] (name=Navigator) (class=firefox) (role=browser)
+[end]
