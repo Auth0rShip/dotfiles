@@ -18,15 +18,25 @@ xmodmap $HOME"/.Xmodmap"
 # And last but not least we start fluxbox.
 # Because it is the last app you have to run it with ''exec'' before it.
 
+# wallpaer
 ~/.fehbg &
 
+# key
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 
 fcitx5 -d &
 
+
 greenclip &
 picom &
+
+# for virtal machine
+if [ "$(systemd-detect-virt)" != "none" ]; then
+    if command -v spice-vdagent >/dev/null 2>&1; then
+        spice-vdagent &
+    fi
+fi
 
 exec fluxbox
