@@ -262,6 +262,10 @@ if [ -f /etc/zsh_command_not_found ]; then
     . /etc/zsh_command_not_found
 fi
 
+if [ -f "$HOME/.local/alias.inc" ]; then
+    source "$HOME/.local/alias.inc"
+fi
+
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
@@ -274,3 +278,6 @@ export LC_ALL=en_US.UTF-8
 
 alias vi="vim"
 
+
+# ssh-agent
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket" 
