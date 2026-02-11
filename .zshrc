@@ -264,13 +264,13 @@ fi
 
 if [ -f "$HOME/.local/alias.inc" ]; then
     source "$HOME/.local/alias.inc"
+    source "$HOME/.local/path.inc"
 fi
 
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
-export PATH="$PATH:$HOME/mylibs/libs_ctf/bin"
 alias gdb="gdb -q"
 
 export LANG=en_US.UTF-8
