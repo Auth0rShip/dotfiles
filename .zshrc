@@ -264,6 +264,9 @@ fi
 
 if [ -f "$HOME/.local/alias.inc" ]; then
     source "$HOME/.local/alias.inc"
+fi
+
+if [ -f "$HOME/.local/path.inc" ]; then
     source "$HOME/.local/path.inc"
 fi
 

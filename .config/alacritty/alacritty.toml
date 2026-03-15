@@ -46,6 +46,7 @@ save_to_clipboard = true
 [keyboard]
 # Example
 bindings = [
+        { key = "N", mods = "Command", action = "CreateNewWindow" },
 		{ key = "C", mods = "Control", action = "Copy" },
 		{ key = "V", mods = "Control|Shift", action = "Paste" },
 		{ key = "C", mods = "Control|Shift", chars= "\u0003" },
