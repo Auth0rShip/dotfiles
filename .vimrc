@@ -91,4 +91,4 @@ endif
 
 
 " plugin command 
-
+let g:denops#deno = '/opt/homebrew/bin/deno'
