@@ -15,10 +15,35 @@ hook_source='''
   let g:vimtex_view_general_options = '-r @line @pdf @tex'
 '''    
 
-
 [[plugins]]
 repo = "jiangmiao/auto-pairs"
 
 
 [[plugins]]
-repo = "lambdalisue/vim-fern"
+repo = "itchyny/calendar.vim"
+
+[[plugins]]
+repo = "obcat/vim-hitspop"
+
+[[plugins]]
+repo = 'lambdalisue/vim-fern'
+
+[[plugins]]
+repo = 'Shougo/ddc.vim'
+
+
+[[plugins]]
+repo = 'mattn/vim-maketable'
+
+[[plugins]]
+repo = 'drewipson/glowing-vim-markdown-preview'
+
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+hook_add = '''
+  imap <S-Tab> <Plug>(neosnippet_expand_or_jump)
+  smap <S-Tab> <Plug>(neosnippet_expand_or_jump)
+  xmap <S-Tab> <Plug>(neosnippet_expand_target)
+  let g:neosnippet#snippets_directory = expand('~/.vim/UltiSnips')
+'''
