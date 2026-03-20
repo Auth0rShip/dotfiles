@@ -276,3 +276,17 @@ gaps inner 5px
 
 # Only enable outer gaps when there is exactly one window or split container on the workspace.
 #smart_gaps inverse_outer
+
+bindsym $mod+shift+b exec --no-startup-id firefox
+bindsym $mod+shift+s exec --no-startup-id discord
+
+mode "TOOLS" {
+    bindsym b exec --no-startup-id burpsuite, mode "default"
+    bindsym g exec --no-startup-id ghidra, mode "default"
+    bindsym w exec --no-startup-id wireshark, mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+shift+z mode "TOOLS" ; \
+    exec --no-startup-id notify-send "TOOLS MODE" "b=Burp  g=Ghidra  w=Wireshark"
