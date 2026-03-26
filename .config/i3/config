@@ -188,6 +188,7 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # assign app
 assign [class="discord"] workspace $ws10
+for_window [class="discord"] move to workspace $ws10, focus
 
 
 # reload the configuration file
@@ -278,15 +279,20 @@ gaps inner 5px
 #smart_gaps inverse_outer
 
 bindsym $mod+shift+b exec --no-startup-id firefox
-bindsym $mod+shift+s exec --no-startup-id discord
+bindsym $mod+shift+s exec --no-startup-id discord, \
+    workspace number 9, \
+    workspace number 10, \
+    [class="discord"] focus
+
 
 mode "TOOLS" {
     bindsym b exec --no-startup-id burpsuite, mode "default"
     bindsym g exec --no-startup-id ghidra, mode "default"
     bindsym w exec --no-startup-id wireshark, mode "default"
+    bindsym f exec --no-startup-id thunar, mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 bindsym $mod+shift+z mode "TOOLS" ; \
-    exec --no-startup-id notify-send "TOOLS MODE" "b=Burp  g=Ghidra  w=Wireshark"
+    exec --no-startup-id notify-send "TOOLS MODE" "b=Burp  g=Ghidra  w=Wireshark f=file-manager"

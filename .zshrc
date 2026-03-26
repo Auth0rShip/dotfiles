@@ -282,5 +282,12 @@ export LC_ALL=en_US.UTF-8
 alias vi="vim"
 
 
-# ssh-agent
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket" 
+
+# SSH Agent
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    ssh-add --apple-load-keychain 2>/dev/null
+else
+    if ! ssh-add -l &>/dev/null; then
+        eval "$(ssh-agent -s)" > /dev/null
+    fi
+fi

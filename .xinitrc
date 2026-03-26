@@ -16,7 +16,7 @@
 . /etc/X11/xinit/xinitrc-common
 
 source $HOME/.xprofile
-xmodmap $HOME/.xmodmap
+
 
 # The user may have their own clients they want to run.  If they don't,
 # fall back to system defaults.
@@ -36,9 +36,4 @@ else
 fi
 
 
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS="@im=fcitx"
-export INPUT_METHOD=fcitx
-fcitx5 &
 
