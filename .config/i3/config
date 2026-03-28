@@ -278,6 +278,9 @@ gaps inner 5px
 # Only enable outer gaps when there is exactly one window or split container on the workspace.
 #smart_gaps inverse_outer
 
+bindsym $mod+shift+m move scratchpad
+bindsym $mod+m scratchpad show
+
 bindsym $mod+shift+b exec --no-startup-id firefox
 bindsym $mod+shift+s exec --no-startup-id discord, \
     workspace number 9, \
