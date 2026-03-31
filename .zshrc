@@ -287,8 +287,21 @@ alias vi="vim"
 if [[ "$OSTYPE" == "darwin"* ]]; then
     ssh-add --apple-load-keychain 2>/dev/null
 else
-    if ! ssh-add -l &>/dev/null; then
-        eval "$(ssh-agent -s)" > /dev/null
+    SSH_AGENT_FILE="$HOME/.ssh/agent.env"
+
+    _agent_is_running() {
+        [[ -z "$SSH_AUTH_SOCK" ]] && return 1
+        [[ ! -S "$SSH_AUTH_SOCK" ]] && return 1
+        ssh-add -l &>/dev/null
+        [[ $? -ne 2 ]]
+    }
+
+    [[ -f "$SSH_AGENT_FILE" ]] && source "$SSH_AGENT_FILE" > /dev/null
+
+    if ! _agent_is_running; then
+        ssh-agent -s > "$SSH_AGENT_FILE"
+        chmod 600 "$SSH_AGENT_FILE"
+        source "$SSH_AGENT_FILE" > /dev/null
+        ssh-add
     fi
 fi
-
