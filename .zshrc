@@ -288,19 +288,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     ssh-add --apple-load-keychain 2>/dev/null
 else
     SSH_AGENT_FILE="$HOME/.ssh/agent.env"
-
-<<<<<<< HEAD
-    _load_agent() {
-        [[ -f "$SSH_AGENT_FILE" ]] && source "$SSH_AGENT_FILE" > /dev/null
-    }
-
-    _agent_is_running() {
-        [[ -n "$SSH_AUTH_SOCK" ]] && ssh-add -l &>/dev/null
-        [[ $? -ne 2 ]]
-    }
-
-    _load_agent
-=======
     _agent_is_running() {
         [[ -z "$SSH_AUTH_SOCK" ]] && return 1
         [[ ! -S "$SSH_AUTH_SOCK" ]] && return 1
@@ -310,7 +297,6 @@ else
 
     [[ -f "$SSH_AGENT_FILE" ]] && source "$SSH_AGENT_FILE" > /dev/null
 
->>>>>>> f4f2368bc5a9f025defcf7a8f2e5b492ec56b5e5
     if ! _agent_is_running; then
         ssh-agent -s > "$SSH_AGENT_FILE"
         chmod 600 "$SSH_AGENT_FILE"
