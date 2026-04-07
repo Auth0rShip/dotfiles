@@ -302,4 +302,4 @@ mode "TOOLS" {
 
 bindsym $mod+shift+z mode "TOOLS" ; \
     exec --no-startup-id notify-send "TOOLS MODE" \
-    "b=Burp\ng=Ghidra\nw=Wireshark\nf=FileManager\nv=VirtualBox\nm=VirtManager"
+    "b=Burp\ng=Ghidra\nw=Wireshark\nf=FileManager\nv=VirtualBox\nq=VirtManager"
