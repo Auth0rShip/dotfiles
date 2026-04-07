@@ -281,11 +281,15 @@ gaps inner 5px
 bindsym $mod+shift+m move scratchpad
 bindsym $mod+m scratchpad show
 
+## assign windows and applications
+
 bindsym $mod+shift+b exec --no-startup-id firefox
 bindsym $mod+shift+s exec --no-startup-id discord, \
     workspace number 9, \
     workspace number 10, \
     [class="discord"] focus
+
+for_window [class="obsidian"] move to workspace number 4
 
 
 mode "TOOLS" {
