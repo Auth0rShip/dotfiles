@@ -1,24 +1,31 @@
 #!/usr/bin/env bash
 
-# Terminate already running bar instances
-killall -q polybar
-sleep 0.1
+LOG=/tmp/polybar.log
 
-# restart i3 if requested
-if [[ $1 = "restart" ]]; then
-	i3-msg restart
+echo "--- $(date)" >> "$LOG"
+
+polybar-msg cmd quit >/dev/null 2>&1
+
+for i in {1..20}; do
+  pgrep -x polybar >/dev/null || break
+  sleep 0.2
+done
+
+pkill -x polybar 2>/dev/null
+
+sleep 1
+
+if [[ "${1:-}" = "restart" ]]; then
+  i3-msg restart
 fi
 
-# Launch bars dynamically on all connected monitors
-echo "---" | tee -a /tmp/polybar.log
-
-if type "xrandr"; then
-  for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    MONITOR=$m polybar --reload statusbar 2>&1 | tee -a /tmp/polybar_$m.log &
+if command -v xrandr >/dev/null 2>&1; then
+  xrandr --query | awk '/ connected/{print $1}' | while read -r m; do
+    echo "Launching polybar on $m" >> "$LOG"
+    MONITOR="$m" polybar -l trace statusbar >> "/tmp/polybar_$m.log" 2>&1 &
   done
 else
-  polybar --reload statusbar &
+  polybar -l trace statusbar >> "$LOG" 2>&1 &
 fi
 
-echo "Bars launched..."
-
+echo "Bars launched..." >> "$LOG"
