@@ -6,10 +6,6 @@ echo "--- $(date)" >> "$LOG"
 
 polybar-msg cmd quit >/dev/null 2>&1
 
-for i in {1..20}; do
-  pgrep -x polybar >/dev/null || break
-  sleep 0.2
-done
 
 pkill -x polybar 2>/dev/null
 
