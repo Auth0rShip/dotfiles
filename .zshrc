@@ -273,6 +273,8 @@ fi
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
+
+export GEF_RC="$HOME/.config/gdb/gef.rc"
 alias gdb="gdb -q"
 
 export LANG=en_US.UTF-8
