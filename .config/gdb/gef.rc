@@ -1,0 +1,4 @@
+[aliases]
+db=hexdump byte
+pattc=pattern create
+patts=pattern search
