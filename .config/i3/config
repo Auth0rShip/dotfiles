@@ -289,7 +289,7 @@ bindsym $mod+shift+s exec --no-startup-id discord, \
     workspace number 10, \
     [class="discord"] focus
 
-for_window [class="obsidian"] move to workspace number 4
+for_window [class="obsidian"] move to workspace number 2
 
 
 mode "TOOLS" {
