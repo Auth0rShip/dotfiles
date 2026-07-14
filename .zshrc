@@ -269,6 +269,10 @@ if [ -f "$HOME/.local/path.inc" ]; then
     source "$HOME/.local/path.inc"
 fi
 
+if [ -f "$HOME/toolbox/bin" ]; then
+    export PATH="$HOME/toolbox/bin:$PATH"
+fi
+
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"

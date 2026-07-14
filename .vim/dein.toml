@@ -41,9 +41,9 @@ repo = 'drewipson/glowing-vim-markdown-preview'
 
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
+depends = ['test']
 hook_add = '''
   imap <S-Tab> <Plug>(neosnippet_expand_or_jump)
   smap <S-Tab> <Plug>(neosnippet_expand_or_jump)
   xmap <S-Tab> <Plug>(neosnippet_expand_target)
-  let g:neosnippet#snippets_directory = expand('~/.vim/UltiSnips')
 '''
