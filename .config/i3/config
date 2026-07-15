@@ -186,9 +186,6 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
 
-# assign app
-assign [class="discord"] workspace $ws10
-for_window [class="discord"] move to workspace $ws10, focus
 
 
 # reload the configuration file
@@ -282,28 +279,41 @@ bindsym $mod+shift+m move scratchpad
 bindsym $mod+m scratchpad show
 
 ## assign windows and applications
+# assign app
+assign [class="discord"] workspace $ws10
+for_window [class="discord"] move to workspace $ws10, focus
+
+assign [class="obsidian"] workspace $ws2
+for_window [class="obsidian"] move to workspace $ws2, focus
+
 
 bindsym $mod+shift+b exec --no-startup-id firefox
+
 bindsym $mod+shift+s exec --no-startup-id discord, \
-    workspace number 9, \
-    workspace number 10, \
+    workspace number $ws9, \
+    workspace number $ws10, \
     [class="discord"] focus
 
-for_window [class="obsidian"] move to workspace number 2
-
+bindsym $mod+shift+w exec --no-startup-id obsidian, \
+    workspace number $ws1, \
+    workspace number $ws2, \
+    [class="obsidian"] focus
 
 mode "TOOLS" {
     bindsym b exec --no-startup-id burpsuite, mode "default"
-    bindsym g exec --no-startup-id ghidra, mode "default"
-    bindsym w exec --no-startup-id wireshark, mode "default"
     bindsym f exec --no-startup-id thunar, mode "default"
-    bindsym v exec --no-startup-id virtualbox, mode "default"
+    bindsym g exec --no-startup-id ghidra, mode "default"
+    bindsym o exec --no-startup-id obsidian, mode "default"
     bindsym q exec --no-startup-id virt-manager, mode "default"
+    bindsym v exec --no-startup-id virtualbox, mode "default"
+    bindsym w exec --no-startup-id wireshark, mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
+
 bindsym $mod+shift+z mode "TOOLS" ; \
     exec --no-startup-id notify-send "TOOLS MODE" \
     "b=Burp\ng=Ghidra\nw=Wireshark\nf=FileManager\nv=VirtualBox\nq=VirtManager"
+

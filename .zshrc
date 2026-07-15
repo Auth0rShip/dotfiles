@@ -269,7 +269,7 @@ if [ -f "$HOME/.local/path.inc" ]; then
     source "$HOME/.local/path.inc"
 fi
 
-if [ -f "$HOME/toolbox/bin" ]; then
+if [ -e "$HOME/toolbox/bin" ]; then
     export PATH="$HOME/toolbox/bin:$PATH"
 fi
 
