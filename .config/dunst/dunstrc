@@ -1,2 +1,89 @@
+[global]
+    # 画面右上にカード状に表示
+    origin = top-right
+    offset = (18, 48)
+
+    # 動的な横幅・高さ
+    width = (320, 420)
+    height = (0, 180)
+    notification_limit = 5
+
+    # カードの余白
+    padding = 14
+    horizontal_padding = 16
+    text_icon_padding = 14
+
+    # 通知同士を離す
+    gap_size = 10
+    separator_height = 0
+
+    # 角丸
+    corner_radius = 12
+    corners = all
+
+    # 細い枠
+    frame_width = 1
+    frame_color = "#545862"
+
+    # コンポジタ使用時のみ有効
+    transparency = 5
+
+    # フォント
+    font = Symbols Nerd Font Mono 11
+
+    # テキスト
+    markup = full
+    format = "<b>%s</b>\n<span foreground='#abb2bf'>%b</span>"
+    alignment = left
+    vertical_alignment = center
+    word_wrap = yes
+    ellipsize = middle
+
+    # アイコン
+    enable_recursive_icon_lookup = true
+    icon_theme = Papirus-Dark
+    min_icon_size = 32
+    max_icon_size = 48
+    icon_position = left
+    icon_corner_radius = 8
+    icon_corners = all
+
+    # 時間
+    timeout = 6
+    idle_threshold = 120
+    pause_on_mouse_over = true
+
+    # 履歴
+    history_length = 30
+
+    # マウス操作
+    mouse_left_click = do_action, close_current
+    mouse_middle_click = close_all
+    mouse_right_click = close_current
+
+    # 進捗バー
+    progress_bar = true
+    progress_bar_height = 8
+    progress_bar_frame_width = 0
+    progress_bar_min_width = 150
+    progress_bar_max_width = 360
+    progress_bar_corner_radius = 4
+    progress_bar_corners = all
+
+[urgency_low]
+    background = "#282c34"
+    foreground = "#abb2bf"
+    frame_color = "#545862"
+    timeout = 3
+
 [urgency_normal]
-timeout = 5
+    background = "#282c34"
+    foreground = "#c8ccd4"
+    frame_color = "#61afef"
+    timeout = 6
+
+[urgency_critical]
+    background = "#282c34"
+    foreground = "#e06c75"
+    frame_color = "#e06c75"
+    timeout = 0
