@@ -283,8 +283,8 @@ bindsym $mod+m scratchpad show
 assign [class="discord"] workspace $ws10
 for_window [class="discord"] move to workspace $ws10, focus
 
-assign [class="obsidian"] workspace $ws2
-for_window [class="obsidian"] move to workspace $ws2, focus
+assign [class="obsidian"] workspace $ws1
+for_window [class="obsidian"] move to workspace $ws1, focus
 
 
 bindsym $mod+shift+b exec --no-startup-id firefox
