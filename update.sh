@@ -8,7 +8,7 @@ set -euo pipefail
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 echo "==> Pulling latest changes"
-git -C "$DOTFILES_DIR" pull --rebase
+git -C "$DOTFILES_DIR" pull --ff-only
 
 echo ""
 echo "==> Applying new or changed links"
