@@ -1,7 +1,9 @@
-# Created by newuser for 5.9
-
 # ~/.zshrc file for zsh interactive shells.
 # see /usr/share/doc/zsh/examples/zshrc for examples
+
+# Keep PATH entries unique
+typeset -U path PATH
+
 
 setopt autocd              # change directory just by typing its name
 #setopt correct            # auto correct mistakes
@@ -28,7 +30,7 @@ bindkey '^[[5~' beginning-of-buffer-or-history    # page up
 bindkey '^[[6~' end-of-buffer-or-history          # page down
 bindkey '^[[H' beginning-of-line                  # home
 bindkey '^[[F' end-of-line                        # end
-bindkey '^[[Z' undo                               # shift + tab undo last action
+#bindkey '^[[Z' undo                               # shift + tab undo last action
 
 # enable completion features
 #compinit -d ~/.cache/zcompdump
@@ -46,18 +48,34 @@ zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 autoload -Uz compinit
+
 compinit
-zstyle ':completion:*' list-suffixes
+#zstyle ':completion:*' list-suffixes true
+
+autoload -Uz history-search-end
+
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+
+bindkey '^[[A' history-beginning-search-backward-end
+bindkey '^[[B' history-beginning-search-forward-end
+
+
 
 # History configurations
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=2000
+HISTSIZE=2000
+SAVEHIST=1000
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
 setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
-#setopt share_history         # share command history data
+setopt share_history         # share command history data
+
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
+
 
 # force zsh to show the complete history
 alias history="history 0"
@@ -66,14 +84,11 @@ alias history="history 0"
 TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
 
 
-autoload -Uz vcs_info
-
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git:*' formats '%F{yellow}[%b]%f'
-zstyle ':vcs_info:git:*' actionformats '%F{yellow}[%b|%a]%f'
-
-
-
+# function for source
+source_if_readable() {
+    [[ -r "$1" ]] || return 0
+    source "$1"
+}
 
 
 # make less more friendly for non-text input files, see lesspipe(1)
@@ -84,49 +99,35 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
-
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-        # We have color support; assume it's compliant with Ecma-48
-        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-        # a case would tend to support setf rather than setaf.)
-        color_prompt=yes
-    else
-        color_prompt=
-    fi
-fi
 
 configure_prompt() {
     prompt_symbol=@
+
     # Skull emoji for root terminal
     #[ "$EUID" -eq 0 ] && prompt_symbol=💀
+
     case "$PROMPT_ALTERNATIVE" in
         twoline)
-            PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}(%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└─%B%(#.%F{red}#.%F{blue}(*\'д\'%)ノ)%b%F{reset} '
-            RPROMPT='${vcs_info_msg_0_}'
+            PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+(${VIRTUAL_ENV:t})─}(%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└─%B%(#.%F{red}#.%F{blue}(*\'д\'%)ノ)%b%F{reset} '
+            RPROMPT=
+
             # Right-side prompt with exit codes and background processes
             #RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
             ;;
+
         oneline)
-            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}%(#.#.$) '
+            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+(${VIRTUAL_ENV:t})}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}%(#.#.$) '
             RPROMPT=
             ;;
+
         backtrack)
-            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{red}%n@%m%b%F{reset}:%B%F{blue}%~%b%F{reset}%(#.#.$) '
+            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+(${VIRTUAL_ENV:t})}%B%F{red}%n@%m%b%F{reset}:%B%F{blue}%~%b%F{reset}%(#.#.$) '
             RPROMPT=
             ;;
     esac
-    unset prompt_symbol
+
 }
+
 
 # The following block is surrounded by two delimiters.
 # These delimiters must not be modified. Thanks.
@@ -135,62 +136,8 @@ PROMPT_ALTERNATIVE=twoline
 NEWLINE_BEFORE_PROMPT=yes
 # STOP KALI CONFIG VARIABLES
 
-if [ "$color_prompt" = yes ]; then
-    # override default virtualenv indicator in prompt
-    VIRTUAL_ENV_DISABLE_PROMPT=1
+configure_prompt
 
-    configure_prompt
-
-    # enable syntax-highlighting
-    if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-        . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-        ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
-        ZSH_HIGHLIGHT_STYLES[default]=none
-        ZSH_HIGHLIGHT_STYLES[unknown-token]=underline
-        ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=cyan,bold
-        ZSH_HIGHLIGHT_STYLES[suffix-alias]=fg=green,underline
-        ZSH_HIGHLIGHT_STYLES[global-alias]=fg=green,bold
-        ZSH_HIGHLIGHT_STYLES[precommand]=fg=green,underline
-        ZSH_HIGHLIGHT_STYLES[commandseparator]=fg=blue,bold
-        ZSH_HIGHLIGHT_STYLES[autodirectory]=fg=green,underline
-        ZSH_HIGHLIGHT_STYLES[path]=bold
-        ZSH_HIGHLIGHT_STYLES[path_pathseparator]=
-        ZSH_HIGHLIGHT_STYLES[path_prefix_pathseparator]=
-        ZSH_HIGHLIGHT_STYLES[globbing]=fg=blue,bold
-        ZSH_HIGHLIGHT_STYLES[history-expansion]=fg=blue,bold
-        ZSH_HIGHLIGHT_STYLES[command-substitution]=none
-        ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]=fg=magenta,bold
-        ZSH_HIGHLIGHT_STYLES[process-substitution]=none
-        ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]=fg=magenta,bold
-        ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=fg=green
-        ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=fg=green
-        ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=none
-        ZSH_HIGHLIGHT_STYLES[back-quoted-argument-delimiter]=fg=blue,bold
-        ZSH_HIGHLIGHT_STYLES[single-quoted-argument]=fg=yellow
-        ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=yellow
-        ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]=fg=yellow
-        ZSH_HIGHLIGHT_STYLES[rc-quote]=fg=magenta
-        ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=magenta,bold
-        ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=magenta,bold
-        ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]=fg=magenta,bold
-        ZSH_HIGHLIGHT_STYLES[assign]=none
-        ZSH_HIGHLIGHT_STYLES[redirection]=fg=blue,bold
-        ZSH_HIGHLIGHT_STYLES[comment]=fg=black,bold
-        ZSH_HIGHLIGHT_STYLES[named-fd]=none
-        ZSH_HIGHLIGHT_STYLES[numeric-fd]=none
-        ZSH_HIGHLIGHT_STYLES[arg0]=fg=cyan
-        ZSH_HIGHLIGHT_STYLES[bracket-error]=fg=red,bold
-        ZSH_HIGHLIGHT_STYLES[bracket-level-1]=fg=blue,bold
-        ZSH_HIGHLIGHT_STYLES[bracket-level-2]=fg=green,bold
-        ZSH_HIGHLIGHT_STYLES[bracket-level-3]=fg=magenta,bold
-        ZSH_HIGHLIGHT_STYLES[bracket-level-4]=fg=yellow,bold
-        ZSH_HIGHLIGHT_STYLES[bracket-level-5]=fg=cyan,bold
-        ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
-    fi
-else
-    PROMPT='${debian_chroot:+($debian_chroot)}%n@%m:%~%(#.#.$) '
-fi
-unset color_prompt force_color_prompt
 
 toggle_oneline_prompt(){
     if [ "$PROMPT_ALTERNATIVE" = oneline ]; then
@@ -207,91 +154,115 @@ bindkey ^P toggle_oneline_prompt
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
-    TERM_TITLE=$'\e]0;${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%n@%m: %~\a'
+    TERM_TITLE=$'\e]0;${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+(${VIRTUAL_ENV:t})}%n@%m: %~\a'
     ;;
 *)
     ;;
 esac
 
 
-precmd() {
-    vcs_info
+autoload -Uz add-zsh-hook
 
+update_prompt() {
     print -Pnr -- "$TERM_TITLE"
 
-    if [ "$NEWLINE_BEFORE_PROMPT" = yes ]; then
-        if [ -z "$_NEW_LINE_BEFORE_PROMPT" ]; then
+    if [[ "$NEWLINE_BEFORE_PROMPT" == yes ]]; then
+        if [[ -z "$_NEW_LINE_BEFORE_PROMPT" ]]; then
             _NEW_LINE_BEFORE_PROMPT=1
         else
-            print ""
+            print
         fi
     fi
 }
 
+add-zsh-hook precmd update_prompt
 
-# enable color support of ls, less and man, and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    export LS_COLORS="$LS_COLORS:ow=30;44:" # fix ls color for folders with 777 permissions
 
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+# Color support and aliases
+case "$OSTYPE" in
+    linux*)
+        # GNU dircolors
+        if [[ -x /usr/bin/dircolors ]]; then
+            if [[ -r "$HOME/.dircolors" ]]; then
+                eval "$(dircolors -b "$HOME/.dircolors")"
+            else
+                eval "$(dircolors -b)"
+            fi
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-    alias diff='diff --color=auto'
-    alias ip='ip --color=auto'
+            # Fix ls color for directories with 777 permissions
+            export LS_COLORS="${LS_COLORS}:ow=30;44:"
 
-    export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
-    export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
-    export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
-    export LESS_TERMCAP_so=$'\E[01;33m'    # begin reverse video
-    export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
-    export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
-    export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+            # Use LS_COLORS for completion
+            zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+            zstyle ':completion:*:*:kill:*:processes' \
+                list-colors '=(#b) #([0-9]#)*=0=01;31'
+        fi
 
-    # Take advantage of $LS_COLORS for completion as well
-    zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-    zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-fi
+        alias ls='ls --color=auto -F'
+        alias grep='grep --color=auto'
+        alias diff='diff --color=auto'
 
-# some more ls aliases
+        # Linux only
+        command -v ip >/dev/null && alias ip='ip --color=auto'
+        ;;
+
+    darwin*)
+        # BSD ls on macOS:
+        # -G enables colors
+        # -F appends file type indicators
+        alias ls='ls -GF'
+
+        # macOS does not provide GNU dircolors/LS_COLORS by default.
+        # BSD ls uses LSCOLORS instead.
+        # Set LSCOLORS here if you want custom colors.
+        # export LSCOLORS='exfxcxdxbxegedabagacad'
+        ;;
+
+    *)
+        # Generic fallback
+        alias ls='ls -F'
+        ;;
+esac
+
+# Common ls aliases
 alias ll='ls -l'
 alias la='ls -A'
-alias ls='ls --color=auto -F'
+
+# less/man colors
+export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
+export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
+export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
+export LESS_TERMCAP_so=$'\E[01;33m'    # begin reverse video
+export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
+export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
+export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
 
-# enable auto-suggestions based on the history
-if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-    . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-    # change suggestion color
-    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
-fi
 
 # enable command-not-found if installed
-if [ -f /etc/zsh_command_not_found ]; then
-    . /etc/zsh_command_not_found
-fi
-
-if [ -f "$HOME/.local/alias.inc" ]; then
-    source "$HOME/.local/alias.inc"
-fi
-
-if [ -f "$HOME/.local/path.inc" ]; then
-    source "$HOME/.local/path.inc"
-fi
-
-if [ -e "$HOME/toolbox/bin" ]; then
-    export PATH="$HOME/toolbox/bin:$PATH"
-fi
 
 
+source_if_readable /etc/zsh_command_not_found
+source_if_readable "$HOME/.local/alias.inc"
+source_if_readable "$HOME/.local/path.inc"
+
+
+
+[[ -d "$HOME/toolbox/bin" ]] && path=("$HOME/toolbox/bin" $path)
+
+
+# pyenv
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-export PATH="$HOME/.local/bin:$PATH"
+[[ -d "$PYENV_ROOT/bin" ]] && path=("$PYENV_ROOT/bin" $path)
+
+if command -v pyenv >/dev/null; then
+    eval "$(pyenv init - zsh)"
+fi
+
+
+if command -v zoxide >/dev/null; then
+    eval "$(zoxide init zsh)"
+fi
 
 
 export GEF_RC="$HOME/.config/gdb/gef.rc"
@@ -304,27 +275,31 @@ alias vi="vim"
 
 
 
+
+
 # SSH Agent
 if [[ "$OSTYPE" == "darwin"* ]]; then
     ssh-add --apple-load-keychain 2>/dev/null
 else
     SSH_AGENT_FILE="$HOME/.ssh/agent.env"
+
     _agent_is_running() {
-        [[ -z "$SSH_AUTH_SOCK" ]] && return 1
-        [[ ! -S "$SSH_AUTH_SOCK" ]] && return 1
+        [[ -n "$SSH_AUTH_SOCK" ]] || return 1
+        [[ -S "$SSH_AUTH_SOCK" ]] || return 1
         ssh-add -l &>/dev/null
         [[ $? -ne 2 ]]
     }
 
-    [[ -f "$SSH_AGENT_FILE" ]] && source "$SSH_AGENT_FILE" > /dev/null
+    # Use an already available agent first
+    if ! _agent_is_running; then
+        [[ -r "$SSH_AGENT_FILE" ]] && source "$SSH_AGENT_FILE" >/dev/null
+    fi
 
+    # Start a new agent if necessary
     if ! _agent_is_running; then
         ssh-agent -s > "$SSH_AGENT_FILE"
         chmod 600 "$SSH_AGENT_FILE"
-        source "$SSH_AGENT_FILE" > /dev/null
+        source "$SSH_AGENT_FILE" >/dev/null
         ssh-add
     fi
 fi
-
-# Created by `pipx` on 2026-07-21 11:23:32
-export PATH="$PATH:/home/auth0r/.local/bin"
