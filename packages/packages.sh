@@ -22,7 +22,7 @@ while read -r package; do
     case "$manager" in
         paru)
             if paru -Si "$package" >/dev/null 2>&1; then
-                paru -S --needed --noconfirm "$package"
+                paru -Syu --needed --noconfirm "$package"
             else
                 echo "Not found: $package"
             fi
