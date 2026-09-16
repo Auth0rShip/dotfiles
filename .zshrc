@@ -65,6 +65,17 @@ alias history="history 0"
 # configure `time` format
 TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
 
+
+autoload -Uz vcs_info
+
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' formats '%F{yellow}[%b]%f'
+zstyle ':vcs_info:git:*' actionformats '%F{yellow}[%b|%a]%f'
+
+
+
+
+
 # make less more friendly for non-text input files, see lesspipe(1)
 #[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
@@ -101,6 +112,7 @@ configure_prompt() {
     case "$PROMPT_ALTERNATIVE" in
         twoline)
             PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}(%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└─%B%(#.%F{red}#.%F{blue}(*\'д\'%)ノ)%b%F{reset} '
+            RPROMPT='${vcs_info_msg_0_}'
             # Right-side prompt with exit codes and background processes
             #RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
             ;;
@@ -201,11 +213,12 @@ xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
     ;;
 esac
 
+
 precmd() {
-    # Print the previously configured title
+    vcs_info
+
     print -Pnr -- "$TERM_TITLE"
 
-    # Print a new line before the prompt, but only if it is not the first line
     if [ "$NEWLINE_BEFORE_PROMPT" = yes ]; then
         if [ -z "$_NEW_LINE_BEFORE_PROMPT" ]; then
             _NEW_LINE_BEFORE_PROMPT=1
@@ -214,6 +227,7 @@ precmd() {
         fi
     fi
 }
+
 
 # enable color support of ls, less and man, and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -311,3 +325,6 @@ else
         ssh-add
     fi
 fi
+
+# Created by `pipx` on 2026-07-21 11:23:32
+export PATH="$PATH:/home/auth0r/.local/bin"
