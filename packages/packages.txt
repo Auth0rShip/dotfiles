@@ -1,0 +1,93 @@
+# Core CLI
+git
+curl
+wget
+rsync
+unzip
+zip
+7zip
+jq
+tree
+which
+less
+htop
+lsof
+ripgrep
+fzf
+grep
+
+
+# Shell / terminal / editor
+zsh
+tmux
+vim
+alacritty
+ghostty
+
+# Development
+base-devel
+gcc
+clang
+cmake
+make
+ninja
+gdb
+python
+go
+rustup
+openai-codex
+pyenv
+
+# Containers
+docker
+docker-compose
+
+# Desktop / X11
+i3-wm
+i3blocks
+rofi
+dunst
+picom
+polybar
+feh
+xclip
+arandr
+yazi
+
+# Japanese input
+fcitx5
+fcitx5-configtool
+fcitx5-gtk
+fcitx5-qt
+fcitx5-mozc
+
+# Fonts
+ttf-hack-nerd
+
+# Network / remote
+openssh
+openfortivpn
+nmap
+
+# Virtualization / QEMU
+qemu-full
+libvirt
+virt-manager
+virt-viewer
+edk2-ovmf
+dnsmasq
+bridge-utils
+
+# Bluetooth
+bluez
+
+# Useful desktop applications
+firefox
+obsidian
+
+
+# Minor tools
+ascii
+bzip2
+hdf5
+
