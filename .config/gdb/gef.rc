@@ -1,4 +1,10 @@
 [aliases]
-db=hexdump byte
-pattc=pattern create
-patts=pattern search
+db = hexdump byte
+pattc = pattern create
+patts = pattern search
+
+[context]
+show_registers_raw = True
+
+[dereference]
+max_recursion = 2
